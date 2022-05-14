@@ -37,6 +37,7 @@ module.exports = {
         void: 'always',
       },
     }],
+    'vue/html-closing-bracket-spacing': ['off', {}],
   },
   overrides: [
     {
