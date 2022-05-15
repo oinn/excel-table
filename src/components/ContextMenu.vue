@@ -5,6 +5,7 @@
         v-for="item in menuItems" :key="item.name"
         class="context-menu__list-item"
         @click="handleMenuItemClick(item.action)"
+        @keydown="handleMenuItemClick(item.action)"
       >
         {{ item.name }}
       </li>
@@ -30,7 +31,7 @@ const {
   copyRow,
   pasteRow,
   insertRowAbove,
-  deleteRow
+  deleteRow,
 } = tableStore;
 
 useClickOutside(uiMenuRef as Ref<HTMLElement>, () => {

@@ -5,11 +5,12 @@
       @click="handleCellClick"
       @dblclick="handleCellDoubleClick"
       @click.right.prevent="handleRightClick"
+      @keydown="handleCellClick"
     >
       <input
         v-model="cellData"
         type="text"
-        :aria-label="props.rowId+props.columnId"
+        :aria-label="`${props.rowId}_${props.columnId}`"
         :size="cellData.length || 1"
         :disabled="!props.cell.isEditable"
         @keydown.enter="unsetEditableCell"
