@@ -14,12 +14,12 @@
     <div class="app-header__title">{{ fileName }}</div>
     <div class="app-header__spacer"></div>
 
-    <UiInput label="search" placeholder="Search..."/>
+    <UiInput v-model="searchText" label="search" placeholder="Search..."/>
   </div>
 </template>
 
 <script lang="ts" setup> // AppHeader
-import { defineEmits, defineProps } from 'vue';
+import { computed, defineEmits, defineProps } from 'vue';
 import UiFileButton from '@/components/Core/UiFileButton.vue';
 import UiButton from '@/components/Core/UiButton.vue';
 import UiInput from '@/components/Core/UiInput.vue';
@@ -27,14 +27,28 @@ import UiInput from '@/components/Core/UiInput.vue';
 interface Emits {
   (e: 'import', file: File): void,
   (e: 'export'): void,
+  (e: 'update:searchText', text: string): void,
 }
 
 const emit = defineEmits<Emits>();
 
-defineProps({
+const props = defineProps({
   fileName: {
     type: String,
     default: '',
+  },
+  searchText: {
+    type: String,
+    default: '',
+  },
+});
+
+const searchText = computed({
+  get() {
+    return props.searchText;
+  },
+  set(value: string) {
+    emit('update:searchText', value);
   },
 });
 </script>
