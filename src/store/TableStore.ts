@@ -91,7 +91,6 @@ export const useTableStore = defineStore('TableStore', {
             return acc;
           }, {} as {[columnName: string]: string});
         });
-        console.log('jsonData', jsonData);
         arrayToXlsx(jsonData, this.fileName);
       }
     },
