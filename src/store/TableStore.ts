@@ -89,7 +89,7 @@ export const useTableStore = defineStore('TableStore', {
           return Object.values(this.columnNames).reduce((acc, columnName, index) => {
             acc[columnName] = row[index].data;
             return acc;
-          }, {});
+          }, {} as {[columnName: string]: string});
         });
         console.log('jsonData', jsonData);
         arrayToXlsx(jsonData, this.fileName);
