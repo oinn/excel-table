@@ -85,12 +85,11 @@ export const useTableStore = defineStore('TableStore', {
     },
     exportToFile() {
       if (this.data.length) {
-        const jsonData = this.data.map((row) => {
-          return Object.values(this.columnNames).reduce((acc, columnName, index) => {
+        const jsonData = this.data.map((row) => Object.values(this.columnNames)
+          .reduce((acc, columnName, index) => {
             acc[columnName] = row[index].data;
             return acc;
-          }, {} as {[columnName: string]: string});
-        });
+          }, {} as {[columnName: string]: string}));
         arrayToXlsx(jsonData, this.fileName);
       }
     },
