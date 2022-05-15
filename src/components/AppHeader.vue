@@ -3,54 +3,50 @@
     <UiFileButton
       label="import"
       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      @select="emit('import', $event)"
+      @select="importFromFile($event)"
     >
       Import
     </UiFileButton>
 
-    <UiButton @click="emit('export')">Export</UiButton>
+    <UiButton @click="handleExportButtonClick">Export</UiButton>
 
     <div class="app-header__spacer"></div>
     <div class="app-header__title">{{ fileName }}</div>
     <div class="app-header__spacer"></div>
 
-    <UiInput v-model="searchText" label="search" placeholder="Search..."/>
+    <UiInput
+      v-model="searchText"
+      label="search"
+      placeholder="Search..."
+      @input="handleSearchInput"
+    />
   </div>
 </template>
 
 <script lang="ts" setup> // AppHeader
-import { computed, defineEmits, defineProps } from 'vue';
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useTableStore } from '@/store/TableStore';
 import UiFileButton from '@/components/Core/UiFileButton.vue';
 import UiButton from '@/components/Core/UiButton.vue';
 import UiInput from '@/components/Core/UiInput.vue';
 
-interface Emits {
-  (e: 'import', file: File): void,
-  (e: 'export'): void,
-  (e: 'update:searchText', text: string): void,
+const searchText = ref('');
+
+const tableStore = useTableStore();
+const { fileName } = storeToRefs(tableStore);
+const { importFromFile, handleSearch, exportToFile } = tableStore;
+
+let searchInputTimer: ReturnType<typeof setTimeout>;
+
+function handleSearchInput() {
+  clearTimeout(searchInputTimer);
+  searchInputTimer = setTimeout(() => handleSearch(searchText.value), 500);
 }
 
-const emit = defineEmits<Emits>();
-
-const props = defineProps({
-  fileName: {
-    type: String,
-    default: '',
-  },
-  searchText: {
-    type: String,
-    default: '',
-  },
-});
-
-const searchText = computed({
-  get() {
-    return props.searchText;
-  },
-  set(value: string) {
-    emit('update:searchText', value);
-  },
-});
+function handleExportButtonClick() {
+  exportToFile();
+}
 </script>
 
 <style lang="scss">
