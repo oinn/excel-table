@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
@@ -8,6 +8,9 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
     },
+  },
+  build: {
+    outDir: join(__dirname, 'docs'),
   },
   plugins: [vue()],
 });
