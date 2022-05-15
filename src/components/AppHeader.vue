@@ -61,6 +61,8 @@ const searchText = computed({
   flex-direction: row;
   align-items: center;
   gap: 12px;
+
+  box-shadow: inset 0px -1px 0px #E6E7E9;
 }
 
 .app-header__spacer {
